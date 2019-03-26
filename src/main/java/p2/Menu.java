@@ -9,20 +9,15 @@ package p2; /**
 
 import p2.api.IProgram;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 public class Menu implements IProgram {
-
-
 	public void menue (Calculator calc) {
-		int choice = -1;
-		Scanner sc = new Scanner(System.in);
-		
+		String choice;
 		do {
-			
 			System.out.println(" Menue-Auswahl");
 			System.out.println(" [1] Celsius          -> Fahrenheit");
 			System.out.println(" [2] Fahrenheit       -> Celsius   ");
@@ -31,58 +26,68 @@ public class Menu implements IProgram {
 			System.out.println(" [5] Diff Date d1 d2  -> Anzahl Tage");
 			
 			System.out.println(" [0] beenden  ");
-			// implement the error handling in the following code			
-			choice = Integer.parseInt(sc.nextLine());		
+			choice = getScanner().next("Bitte geben sie eine Valide aktion an.", "0", "1", "2", "3", "4", "5");
 			switch (choice) {
-			case 1:
-				// implement the error handling in the following code
+			case "1":
 				System.out.println("Temperatur in Celsius eingeben");
-				double celsius = Double.parseDouble(sc.nextLine());
+				Double celsius = getScanner().nextDouble("Bitte gebe eine valide Zahl ein.");
+				if (celsius == null) {
+					choice = "0";
+					break;
+				}
+
 				System.out.println(celsius + " Grad Celsius sind: "+ calc.celsiusToFahrenheit(celsius) + " Grad Fahrenheit");	
 			    break;			
-			case 2:	
+			case "2":
 				// implement the error handling in the following code
 				System.out.println("Temperatur in Fahrenheit eingeben");
-				double fahrenheit = Double.parseDouble(sc.nextLine());
+				Double fahrenheit = getScanner().nextDouble("Bitte gebe eine valide Zahl ein.");
+
+				if (fahrenheit == null) {
+					choice = "0";
+					break;
+				}
+
 				System.out.println(fahrenheit + " Grad Fahrenheit sind:" + calc.fahrenheitToCelsius(fahrenheit) +" Grad Celsius");
 			    break;				
-			case 3:
-				Integer number = getScanner().nextInteger("invalid input string, please try again.");
-				calc.toBinary(number )
+			case "3":
+				System.out.println("Bitte geben sie die Zahl ein, die sie zu einem Binary machen wollen.");
+				Integer number = getScanner().nextInteger("Keine Gültige Zahl, bitte versuche es erneut.");
+
+				if (number == null) {
+					choice = "0";
+					break;
+				}
+
+				System.out.println(number + " ist in binär: " + calc.toBinary(number));
 			   break;			 
-			case 4:
-				calc.binaryToInteger(getScanner().next(s -> calc.validateBinaryString(s)));
+			case "4":
+				System.out.println("Gebe einen Binären String ein:");
+				String next = getScanner().next("Bitte gebe ein Valider Binary String an.", calc::validateBinaryString);
+
+				if (next == null) {
+					choice = "0";
+					break;
+				}
+
+				System.out.println("Die zahl ist: " + calc.binaryToInteger(next));
 			   break;
-			case 5:	
-				// number of days between two dates
-				// complete the program and implement the error handling	
-				// the code below is just a small help, please do it better WAL
-						
-				String date1 = "2019/01/14";
-				String date2 = "2019/01/17";
-				// custom date format
-				
-				Date d1 = null;
-				Date d2 = null;
-				
-			     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); 
-			     
-			     try {
-			    	 d1 = sdf.parse(date1);
-			    	 d2 = sdf.parse(date2);
-			    	} catch (ParseException e) {
-			    	    e.printStackTrace();
-			    	}    
-							
-				System.out.println("Anzahl Tage zwischen " + sdf.format(d2) + " und " + sdf.format(d1) + " ist: " + calc.diffDate(d1,d2));
-			break;					
+			case "5":
+				System.out.println("bitte geben sie das erste Datum ein:");
+				String pattern = "yyyy/MM/dd";
+				LocalDate date1 = getScanner().getDate(pattern, "Bitte geben sie ein valides Datum an.");
+				System.out.println("bitte geben sie das zweite Datum ein:");
+				LocalDate date2 = getScanner().getDate(pattern, "Bitte geben sie ein valides Datum an.");
+
+				System.out.println("Anzahl Tage zwischen " + date1.toString() + " und " + date2.toString() + " ist: " + ChronoUnit.DAYS.between(date1, date2));
+			break;
+			default:
+				choice = "0";
 			
 			}
 	
-		} while( choice != 0);
-		
-		sc.close();
-		
+		} while(!choice.equalsIgnoreCase("0"));
+
+		System.out.println("Program wird beendet");
 	}
-	
 }

@@ -1,5 +1,8 @@
 package p2.api;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -109,11 +112,13 @@ public class InternalScanner {
         return next;
     }
 
-    public String next(Predicate<String> validate) {
+    public String next(String invalidInputMessage, Predicate<String> validate) {
         while (true) {
             String s = next();
             if (validate.test(s)) {
                 return s;
+            }else {
+                System.out.println(invalidInputMessage);
             }
         }
     }
@@ -142,6 +147,33 @@ public class InternalScanner {
                 return r;
             }else {
                 System.out.println(invalidInputMessage);
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * @param pattern the date Pattern
+     * @param invalidInputMessage message that gets sent if the entered value is invalid.
+     * @return Returns the next entered date that fits the input Pattern
+     */
+    public LocalDate getDate(String pattern, String invalidInputMessage) {
+        while (true) {
+            try {
+                String next = scanner.next();
+                if (IProgram instanceof IStopable) {
+                    if (next.equalsIgnoreCase("stop")) {
+                        IStopable program = (IStopable) this.IProgram;
+                        program.stop();
+                        break;
+                    }
+                }
+                return LocalDate.parse(
+                        next,
+                        DateTimeFormatter.ofPattern(pattern));
+            }catch (DateTimeParseException ex) {
+                System.out.println(invalidInputMessage + "\n" + ex.getMessage());
             }
         }
         return null;

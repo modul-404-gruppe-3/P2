@@ -23,7 +23,7 @@ public class Calculator {
 
 	public boolean validateBinaryString(String binary) {
 		for (char c : binary.toCharArray()) {
-			if (!(c =='1' || c == '2')) {
+			if (!(c =='1' || c == '0')) {
 				return false;
 			}
 		}
