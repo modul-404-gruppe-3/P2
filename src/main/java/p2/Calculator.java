@@ -7,6 +7,8 @@ package p2; /**
  * WAL: in this file you don't have to make any changes
  */
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class Calculator {
@@ -44,22 +46,13 @@ public class Calculator {
              count++;
         }
         return result;
-        // return Integer.parseInt(binary, 2));
-        
     }
 
-    public  String toBinary(int number) {
+    public String toBinary(int number) {
     	return Integer.toBinaryString(number);
 	   }
        
-     public int diffDate(Date d1, Date d2) {
-    	 
-    	 long diff = d2.getTime() - d1.getTime();
-
-         return (int) (diff / 1000 / 60 / 60 / 24);
-  
+     public long diffDate(LocalDate d1, LocalDate d2) {
+         return ChronoUnit.DAYS.between(d1, d2);
      }
-     
-   
-     
 }
