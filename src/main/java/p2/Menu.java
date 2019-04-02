@@ -30,7 +30,6 @@ public class Menu implements IProgram, IStopable {
 				System.out.println("Temperatur in Celsius eingeben");
 				Double celsius = getScanner().nextDouble("Bitte gebe eine valide Zahl ein.");
 				if (celsius == null) {
-					choice = "0";
 					break;
 				}
 
@@ -41,7 +40,6 @@ public class Menu implements IProgram, IStopable {
 				Double fahrenheit = getScanner().nextDouble("Bitte gebe eine valide Zahl ein.");
 
 				if (fahrenheit == null) {
-					choice = "0";
 					break;
 				}
 
@@ -52,7 +50,6 @@ public class Menu implements IProgram, IStopable {
 				Integer number = getScanner().nextInteger("Keine Gültige Zahl, bitte versuche es erneut.");
 
 				if (number == null) {
-					choice = "0";
 					break;
 				}
 
@@ -63,7 +60,6 @@ public class Menu implements IProgram, IStopable {
 				String next = getScanner().next("Bitte gebe ein Valider Binary String an.", calc::validateBinaryString);
 
 				if (next == null) {
-					choice = "0";
 					break;
 				}
 
