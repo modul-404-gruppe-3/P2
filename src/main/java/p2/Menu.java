@@ -8,11 +8,11 @@ package p2; /**
  */
 
 import p2.api.IProgram;
+import p2.api.IStopable;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
-public class Menu implements IProgram {
+public class Menu implements IProgram, IStopable {
 	public void menue (Calculator calc) {
 		String choice;
 		do {
