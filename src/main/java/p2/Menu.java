@@ -1,19 +1,16 @@
-package p2; /**
- *  Competence P2
- * 
- * @author D. A. Waldvogel
- * @version Version 1.0
- * @date 16.02.2019
- * 
- */
+package p2;
 
-import p2.api.IProgram;
-import p2.api.IStopable;
+import lombok.AllArgsConstructor;
+import service.api.IProgram;
+import service.api.IStopable;
 
 import java.time.LocalDate;
 
+@AllArgsConstructor
 public class Menu implements IProgram, IStopable {
-	public void menue (Calculator calc) {
+	private Calculator calculator;
+
+	public void execute() {
 		String choice;
 		do {
 			System.out.println(" Menue-Auswahl");
@@ -33,7 +30,7 @@ public class Menu implements IProgram, IStopable {
 					break;
 				}
 
-				System.out.println(celsius + " Grad Celsius sind: "+ calc.celsiusToFahrenheit(celsius) + " Grad Fahrenheit");	
+				System.out.println(celsius + " Grad Celsius sind: "+ calculator.celsiusToFahrenheit(celsius) + " Grad Fahrenheit");
 			    break;			
 			case "2":
 				System.out.println("Temperatur in Fahrenheit eingeben");
@@ -43,7 +40,7 @@ public class Menu implements IProgram, IStopable {
 					break;
 				}
 
-				System.out.println(fahrenheit + " Grad Fahrenheit sind:" + calc.fahrenheitToCelsius(fahrenheit) +" Grad Celsius");
+				System.out.println(fahrenheit + " Grad Fahrenheit sind:" + calculator.fahrenheitToCelsius(fahrenheit) +" Grad Celsius");
 			    break;				
 			case "3":
 				System.out.println("Bitte geben sie die Zahl ein, die sie zu einem Binary machen wollen.");
@@ -53,17 +50,17 @@ public class Menu implements IProgram, IStopable {
 					break;
 				}
 
-				System.out.println(number + " ist in binär: " + calc.toBinary(number));
+				System.out.println(number + " ist in binär: " + calculator.toBinary(number));
 			   break;			 
 			case "4":
 				System.out.println("Gebe einen Binären String ein:");
-				String next = getScanner().next("Bitte gebe ein Valider Binary String an.", calc::validateBinaryString);
+				String next = getScanner().next("Bitte gebe ein Valider Binary String an.", calculator::validateBinaryString);
 
 				if (next == null) {
 					break;
 				}
 
-				System.out.println("Die zahl ist: " + calc.binaryToInteger(next));
+				System.out.println("Die zahl ist: " + calculator.binaryToInteger(next));
 			   break;
 			case "5":
 				System.out.println("bitte geben sie das erste Datum in ein (yyyy/MM/dd):");
@@ -72,7 +69,7 @@ public class Menu implements IProgram, IStopable {
 				System.out.println("bitte geben sie das zweite Datum ein: (yyyy/MM/dd)");
 				LocalDate date2 = getScanner().getDate(pattern, "Bitte geben sie ein valides Datum an. (yyyy/MM/dd)");
 
-				System.out.println("Anzahl Tage zwischen " + date1.toString() + " und " + date2.toString() + " ist: " + calc.diffDate(date1, date2));
+				System.out.println("Anzahl Tage zwischen " + date1.toString() + " und " + date2.toString() + " ist: " + calculator.diffDate(date1, date2));
 			break;
 			default:
 				choice = "0";

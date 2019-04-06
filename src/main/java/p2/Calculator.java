@@ -1,11 +1,4 @@
-package p2; /**
- *  Competence P2
- * 
- * @author D. A. Waldvogel
- * @version Version 1.0
- * @date 16.02.2019
- * WAL: in this file you don't have to make any changes
- */
+package p2;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
