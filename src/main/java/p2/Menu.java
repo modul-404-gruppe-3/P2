@@ -1,13 +1,13 @@
 package p2;
 
 import lombok.AllArgsConstructor;
-import service.api.IProgram;
+import service.api.AbstractProgram;
 import service.api.IStopable;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
-public class Menu implements IProgram, IStopable {
+public class Menu extends AbstractProgram implements IStopable {
 	private Calculator calculator;
 
 	public void execute() {
